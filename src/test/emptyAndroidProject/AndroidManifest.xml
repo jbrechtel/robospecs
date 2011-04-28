@@ -1,0 +1,12 @@
+<manifest
+android:versionName="0.1" android:versionCode="1" package="org.brechtel.fakeApp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-sdk android:minSdkVersion="7"/>
+    <application android:icon="@drawable/android:star_big_on" android:label="Fake App">
+        <activity android:label="Fake Activity" android:name=".activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
