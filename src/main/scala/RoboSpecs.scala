@@ -9,16 +9,19 @@ import java.io.File
 import com.xtremelabs.robolectric.res.ResourceLoader
 import com.xtremelabs.robolectric.shadows.ShadowApplication
 import com.xtremelabs.robolectric.{ApplicationResolver, Robolectric, RobolectricConfig}
-import org.specs2.specification.BeforeExample
+import org.specs2.specification.BeforeEach
 
-trait RoboSpecs extends RoboSpecsWithInstrumentation {
+trait RoboSpecs extends RoboSpecsWithInstrumentation { outer =>
   lazy val instrumentedClass = RoboSpecs.classLoader.bootstrap(this.getClass)
   lazy val instrumentedInstance = instrumentedClass.newInstance.asInstanceOf[RoboSpecsWithInstrumentation]
-  override def is = instrumentedInstance.instrumentedFragments
+  override def is = instrumentedInstance.state(instrumentedInstance.instrumentedFragments)
 }
 
-trait RoboSpecsWithInstrumentation extends Specification with BeforeExample {
-  def before { setupApplicationState() }
+trait RoboSpecsWithInstrumentation extends Specification {
+  lazy val state = new BeforeEach {
+    def before = setupApplicationState
+  }
+  
   def instrumentedFragments = super.is
 
   lazy val robolectricConfig = new RobolectricConfig(new File("./src/main"))
