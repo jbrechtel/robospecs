@@ -27,8 +27,8 @@ trait RoboAcceptanceSpecs extends org.specs2.Specification with RoboSpecsWithIns
 
 trait RoboSpecsWithInstrumentation extends SpecificationStructure {
   lazy val setup = new BeforeEach {
-    def before = setupApplicationState
-	def ^(fs: Fragments) = this(fs)
+    def before { setupApplicationState() }
+	  def ^(fs: Fragments) = this(fs)
   }
   def instrumentedFragments: Fragments
   lazy val robolectricConfig = new RobolectricConfig(new File("./src/main"))
