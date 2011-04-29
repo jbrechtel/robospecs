@@ -6,3 +6,4 @@ project/boot
 lib/android.jartmp
 tmp
 out
+project/plugins/project/build.properties
