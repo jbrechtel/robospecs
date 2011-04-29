@@ -9,7 +9,7 @@ import java.io.File
 import com.xtremelabs.robolectric.res.ResourceLoader
 import com.xtremelabs.robolectric.shadows.ShadowApplication
 import com.xtremelabs.robolectric.{ApplicationResolver, Robolectric, RobolectricConfig}
-import org.specs2.specification.{BeforeExample, BeforeEach}
+import org.specs2.specification.BeforeExample
 
 trait RoboSpecs extends RoboSpecsWithInstrumentation {
   lazy val instrumentedClass = RoboSpecs.classLoader.bootstrap(this.getClass)

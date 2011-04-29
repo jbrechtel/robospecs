@@ -18,6 +18,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/emptyAndroidProject/src/scala" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/emptyAndroidProject/src/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="module-library" exported="" scope="TEST">
