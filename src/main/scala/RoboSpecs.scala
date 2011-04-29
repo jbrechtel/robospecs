@@ -9,21 +9,28 @@ import java.io.File
 import com.xtremelabs.robolectric.res.ResourceLoader
 import com.xtremelabs.robolectric.shadows.ShadowApplication
 import com.xtremelabs.robolectric.{ApplicationResolver, Robolectric, RobolectricConfig}
-import org.specs2.specification.BeforeEach
+import org.specs2.specification._
 
-trait RoboSpecs extends RoboSpecsWithInstrumentation { outer =>
+trait RoboSpecs extends Specification with RoboSpecsWithInstrumentation { 
   lazy val instrumentedClass = RoboSpecs.classLoader.bootstrap(this.getClass)
   lazy val instrumentedInstance = instrumentedClass.newInstance.asInstanceOf[RoboSpecsWithInstrumentation]
-  override def is = instrumentedInstance.state(instrumentedInstance.instrumentedFragments)
+  def instrumentedFragments = super.is
+  override def is = instrumentedInstance.setup(instrumentedInstance.instrumentedFragments)
 }
 
-trait RoboSpecsWithInstrumentation extends Specification {
-  lazy val state = new BeforeEach {
-    def before = setupApplicationState
-  }
-  
-  def instrumentedFragments = super.is
+trait RoboAcceptanceSpecs extends org.specs2.Specification with RoboSpecsWithInstrumentation { 
+  lazy val instrumentedClass = RoboSpecs.classLoader.bootstrap(this.getClass)
+  lazy val instrumentedInstance = instrumentedClass.newInstance.asInstanceOf[RoboSpecsWithInstrumentation]
+  override def map(f: Fragments) = instrumentedInstance.setup(instrumentedInstance.is)
+  def instrumentedFragments = is
+}
 
+trait RoboSpecsWithInstrumentation extends SpecificationStructure {
+  lazy val setup = new BeforeEach {
+    def before = setupApplicationState
+	def ^(fs: Fragments) = this(fs)
+  }
+  def instrumentedFragments: Fragments
   lazy val robolectricConfig = new RobolectricConfig(new File("./src/main"))
   lazy val resourceLoader = {
     val rClassName: String = robolectricConfig.getRClassName

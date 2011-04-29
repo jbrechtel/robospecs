@@ -12,3 +12,12 @@ class InternalRoboSpecsSpecs extends RoboSpecs {
     }
   }
 }
+
+class InternalRoboSpecsAcceptanceSpecs extends RoboAcceptanceSpecs { def is = 
+
+  "a running spec should"         ^
+    "have an Android application" ! e1
+
+  def e1 = Robolectric.application must not beNull
+  override lazy val robolectricConfig = new RobolectricConfig(new File("./src/test/emptyAndroidProject"))
+}
