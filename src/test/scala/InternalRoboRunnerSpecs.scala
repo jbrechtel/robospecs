@@ -1,9 +1,9 @@
-package org.brechtel.specs2
+package org.brechtel.electricspecs
 
 import java.io.File
 import com.xtremelabs.robolectric.{RobolectricConfig, Robolectric}
 
-class InternalRoboRunnerSpecs extends RoboRunner {
+class InternalRoboSpecs extends RoboSpecs {
   override lazy val robolectricConfig = new RobolectricConfig(new File("./src/test/emptyAndroidProject"))
 
   "a running spec" should {

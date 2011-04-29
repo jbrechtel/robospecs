@@ -1,4 +1,4 @@
-package org.brechtel.specs2
+package org.brechtel.electricspecs
 
 import org.specs2.mutable.Specification
 import com.xtremelabs.robolectric.bytecode.{RobolectricClassLoader, ShadowWrangler}
@@ -11,13 +11,13 @@ import com.xtremelabs.robolectric.shadows.ShadowApplication
 import com.xtremelabs.robolectric.{ApplicationResolver, Robolectric, RobolectricConfig}
 import org.specs2.specification.{BeforeExample, BeforeEach}
 
-trait RoboRunner extends InstrumentedRoboRunner {
-  lazy val instrumentedClass = RoboRunner.classLoader.bootstrap(this.getClass)
-  lazy val instrumentedInstance = instrumentedClass.newInstance.asInstanceOf[InstrumentedRoboRunner]
+trait RoboSpecs extends RoboSpecsWithInstrumentation {
+  lazy val instrumentedClass = RoboSpecs.classLoader.bootstrap(this.getClass)
+  lazy val instrumentedInstance = instrumentedClass.newInstance.asInstanceOf[RoboSpecsWithInstrumentation]
   override def is = instrumentedInstance.instrumentedFragments
 }
 
-trait InstrumentedRoboRunner extends Specification with BeforeExample {
+trait RoboSpecsWithInstrumentation extends Specification with BeforeExample {
   def before { setupApplicationState() }
   def instrumentedFragments = super.is
 
@@ -36,7 +36,7 @@ trait InstrumentedRoboRunner extends Specification with BeforeExample {
   }
 }
 
-object RoboRunner {
+object RoboSpecs {
   lazy val classHandler = ShadowWrangler.getInstance
   lazy val classLoader = {
      val loader = new RobolectricClassLoader(classHandler)
@@ -45,7 +45,7 @@ object RoboRunner {
      loader.delegateLoadingOf("scala.")
 
      List(classOf[Uri__FromAndroid],
-          classOf[InstrumentedRoboRunner],
+          classOf[RoboSpecsWithInstrumentation],
           classOf[RobolectricClassLoader],
           classOf[RealObject],
           classOf[ShadowWrangler],
