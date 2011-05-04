@@ -1,12 +1,38 @@
 RoboSpecs
----------
+=========
 
-RoboSpecs lets you use [Robolectric](http://pivotal.github.com/robolectric/) with [Specs2](http://specs2.org) to test drive your Android applications using Scala.
+RoboSpecs lets you use [Robolectric](http://pivotal.github.com/robolectric/) with [Specs2](http://specs2.org).
 
-Using RoboSpecs is really easy.  Download the latest jar from: https://github.com/jbrechtel/robospecs/archives/master
+Using Robolectric with Specs2 means that you mean write unit tests for your Android apps 
+in Scala and run them in a JVM.  Without Robolectric, Android unit tests must be run in 
+an emulator.  This is slow and painful enough to make TDD impossible with Android.
 
-(proper Maven dependency coming soon, I promise)
+Robolectric provides a JUnit test runner which does some class loader magic at runtime 
+to give your unit tests fake versions of Android framework classes.  Robospecs is 
+similar to Robolectric's JUnit test runner.  Robospecs does not use JUnit.
 
+Using RoboSpecs is really easy.
+
+Download the latest jar
+----------------
+Get it here [GitHub](https://github.com/jbrechtel/robospecs/archives/master)
+
+Add an SBT dependency
+-----------
+
+    val robospecs = "com.github.jbrechtel" %% "robospecs" % "0.1-SNAPSHOT" % "test"
+    val robospecsSnapshots  = "snapshots" at "http://jbrechtel.github.com/repo/snapshots"
+
+Add a Maven dependency
+-----------
+
+    <dependency>
+        <groupId>com.github.jbrechtel</groupId>
+        <artifactId>robospecs</artifactId>
+        <version>0.1-SNAPSHOT</version>
+        <scope>test</scope>
+    </dependency>
+      
 Then you can mix it into your Specs2 specs like so:
 
       package com.wtfware.disperse
