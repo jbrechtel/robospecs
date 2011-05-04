@@ -1,4 +1,4 @@
-package org.brechtel.electricspecs
+package com.github.jbrechtel.robospecs
 
 import java.io.File
 import com.xtremelabs.robolectric.{RobolectricConfig, Robolectric}

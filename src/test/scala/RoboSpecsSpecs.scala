@@ -1,4 +1,4 @@
-package org.brechtel.electricspecs
+package com.github.jbrechtel.robospecs
 
 import org.specs2.mutable.Specification
 import org.specs2.mock.Mockito
