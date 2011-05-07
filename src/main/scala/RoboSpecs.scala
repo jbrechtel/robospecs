@@ -60,7 +60,6 @@ object RoboSpecs {
           classOf[RealObject],
           classOf[ShadowWrangler],
           classOf[RobolectricConfig],
-          classOf[ResourceLoader],
           classOf[R]).foreach { classToDelegate => loader.delegateLoadingOf(classToDelegate.getName) }
 
      loader
