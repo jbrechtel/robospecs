@@ -22,6 +22,9 @@ Add an SBT dependency
 
     val robospecs = "com.github.jbrechtel" %% "robospecs" % "0.1-SNAPSHOT" % "test"
     val robospecsSnapshots  = "snapshots" at "http://jbrechtel.github.com/repo/snapshots"
+    val snapshots = "snapshots" at "http://scala-tools.org/repo-snapshots"
+    val releases  = "releases" at "http://scala-tools.org/repo-releases"
+
 
 Add a Maven dependency
 -----------
