@@ -36,32 +36,58 @@ Add a Maven dependency
         <scope>test</scope>
     </dependency>
       
+
+Example project
+--------------
+
+See a very simple, but working, example project here: [https://github.com/jbrechtel/robospecs_example](https://github.com/jbrechtel/robospecs_example)
+
+Here's the specs from that projects
+
 Then you can mix it into your Specs2 specs like so:
 
-      package com.wtfware.disperse
+	package com.brechtel.toaster
 
-      import org.specs2.mutable._
-      import org.specs2.mock.Mockito
-      import org.specs2.matcher.{Expectable, Matcher}
-      import org.specs2.specification.BeforeExample
-      import org.mockito.Matchers.{anyInt, argThat, eq => isEq }
-      import org.brechtel.electricspecs.RoboSpecs
-      import android.content.Context
-      import android.appwidget.AppWidgetManager
-      import android.widget.RemoteViews
-      import providers.BigWidgetProvider
+	import org.specs2.mutable._
+	import org.specs2.mock.Mockito
+	import org.specs2.matcher.{Expectable, Matcher}
+	import org.specs2.specification.BeforeExample
+	import com.github.jbrechtel.robospecs.RoboSpecs
+	import com.xtremelabs.robolectric.shadows._
 
-      class BigWidgetProviderSpecs extends Specification with Mockito with RoboSpecs {
+	class MainActivitySpecs extends RoboSpecs with Mockito {
 
-        "onUpdate" should {
+	  "onCreate" should {
+	    "set the content view" in {
+	      val activity = new MainActivity()
+	      activity.onCreate(null)
+	      activity.findViewById(R.id.message) must not beNull
+	    }
+	  }
 
-          "tell the appWidgetManager to update each appWidget provided" in {
-            val provider = new BigWidgetProvider()
-            val fakeContext = mock[Context]
-            val fakeManager = mock[AppWidgetManager]
-            provider.onUpdate(fakeContext, fakeManager, Array(1,2))
-            there was one(fakeManager).updateAppWidget(isEq(1), any[RemoteViews])
-            there was one(fakeManager).updateAppWidget(isEq(2), any[RemoteViews])
-          }
-        }
-      }
+	  "showMessageButton" should {
+	    "be the Show Message button in the view" in {
+	      val activity = new MainActivity()
+	      activity.onCreate(null)
+	      activity.showMessageButton == activity.findViewById(R.id.show_message)
+	    }
+	  }
+
+	  "messageEditText" should {
+	    "be the EditText in the view" in {
+	      val activity = new MainActivity()
+	      activity.onCreate(null)
+	      activity.messageEditText == activity.findViewById(R.id.message)
+	    }
+	  }
+
+	  "clicking the showMessageButton" should {
+	    "show a toast popup with text from the message input field" in {
+	      val activity = new MainActivity()
+	      activity.onCreate(null)
+	      activity.messageEditText.setText("expected message")
+	      activity.showMessageButton.performClick()
+	      ShadowToast.getTextOfLatestToast must beEqualTo("expected message")
+	    }
+	  }
+	}
