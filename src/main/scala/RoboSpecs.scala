@@ -21,7 +21,7 @@ trait RoboSpecs extends Specification with RoboSpecsWithInstrumentation {
 trait RoboAcceptanceSpecs extends org.specs2.Specification with RoboSpecsWithInstrumentation { 
   lazy val instrumentedClass = RoboSpecs.classLoader.bootstrap(this.getClass)
   lazy val instrumentedInstance = instrumentedClass.newInstance.asInstanceOf[RoboSpecsWithInstrumentation]
-  override def map(f: Fragments) = instrumentedInstance.setup(instrumentedInstance.is)
+  override def map(f: => Fragments) = instrumentedInstance.setup(instrumentedInstance.is)
   def instrumentedFragments = is
 }
 
