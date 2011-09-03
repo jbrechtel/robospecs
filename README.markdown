@@ -35,7 +35,9 @@ Add a Maven dependency
         <version>0.1-SNAPSHOT</version>
         <scope>test</scope>
     </dependency>
-      
+
+WARNING: When you use RoboSpecs do not attempt to place Android SDK code within the "should {} codeblock" or outside of it. Robolectric shadows are only attached within the "in {} codeblocks", so Android SDK code only works within them.
+-------
 
 Example project
 --------------
