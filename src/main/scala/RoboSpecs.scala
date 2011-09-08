@@ -119,9 +119,9 @@ object RoboSpecs {
           classOf[RobolectricConfig],
           classOf[R]).foreach { classToDelegate => loader.delegateLoadingOf(classToDelegate.getName) }
 	
-		//this line should be re-added once robolectric accepts my pull request so that there is a method to call.
+		//this line can be commented out until robolectric accepts my pull request so that there is a method to call.
 		//when using mixed java\scala it is likely needed if the scala tests are the first ones to run.
-        //RobolectricTestRunner.setDefaultLoader(loader);
+        RobolectricTestRunner.setDefaultLoader(loader);
 		
      Some(loader)
   }
