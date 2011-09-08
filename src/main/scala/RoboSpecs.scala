@@ -18,23 +18,23 @@ import com.xtremelabs.robolectric.internal.RobolectricTestRunnerInterface
 import javassist.Loader
 import com.xtremelabs.robolectric.RobolectricTestRunner
 
-trait RoboDb {def dbMap: DatabaseMap}
+trait RoboDbMap {def dbMap: DatabaseMap}
 
 /**
  * Requires robolectric-sqlite.jar (com.seventheye.robolectric.sqlite.util.SQLiteMap)
  */
-trait RoboSQLite extends RoboDb {
+trait RoboSQLiteMap extends RoboDbMap {
   //support for SQLite (https://github.com/cessationoftime/robolectric-sqlite)
   def dbMap = Class.forName("com.seventheye.robolectric.sqlite.util.SQLiteMap").newInstance().asInstanceOf[DatabaseMap]
 }
 
-//Support for H2
-trait RoboH2 extends RoboDb {
+//Support for H2 Database
+trait RoboH2Map extends RoboDbMap {
   def dbMap = new H2Map()
 }
 
 //extend mutable Specification
-trait RoboSpecs extends Specification with RoboSpecsWithInstrumentation { this:RoboDb =>  
+trait RoboSpecs extends Specification with RoboSpecsWithInstrumentation { this:RoboDbMap =>  
     val loader = RoboSpecs.getClassLoader(this.getClass)
     val instrumentedClass = loader.bootstrap(this.getClass)
     Thread.currentThread().setContextClassLoader(loader);
@@ -44,7 +44,7 @@ trait RoboSpecs extends Specification with RoboSpecsWithInstrumentation { this:R
 }
 
 //extend immutable Specification
-trait RoboAcceptanceSpecs  extends org.specs2.Specification with RoboSpecsWithInstrumentation { this:RoboDb =>  
+trait RoboAcceptanceSpecs  extends org.specs2.Specification with RoboSpecsWithInstrumentation { this:RoboDbMap =>  
   val loader = RoboSpecs.getClassLoader(this.getClass)
   val instrumentedClass = loader.bootstrap(this.getClass)
   Thread.currentThread().setContextClassLoader(loader);
@@ -54,7 +54,7 @@ trait RoboAcceptanceSpecs  extends org.specs2.Specification with RoboSpecsWithIn
   def instrumentedFragments = is
 }
 
-trait RoboSpecsWithInstrumentation extends SpecificationStructure { this:RoboDb =>
+trait RoboSpecsWithInstrumentation extends SpecificationStructure { this:RoboDbMap =>
   lazy val setup = new BeforeEach {
     def before { setupApplicationState() }
     def ^(fs: Fragments) = this(fs)
@@ -118,7 +118,11 @@ object RoboSpecs {
           classOf[ShadowWrangler],
           classOf[RobolectricConfig],
           classOf[R]).foreach { classToDelegate => loader.delegateLoadingOf(classToDelegate.getName) }
-     RobolectricTestRunner.setDefaultLoader(loader);
+	
+		//this line should be re-added once robolectric accepts my pull request so that there is a method to call.
+		//when using mixed java\scala it is likely needed if the scala tests are the first ones to run.
+        //RobolectricTestRunner.setDefaultLoader(loader);
+		
      Some(loader)
   }
 }
