@@ -1,5 +1,3 @@
-import AssemblyKeys._ // put this at the top of the file
-
 organization := "com.github.jbrechtel"
 
 name := "robospecs"
@@ -13,7 +11,5 @@ libraryDependencies ++= Seq(
   "org.specs2" %% "specs2" % "1.6.1",
   "org.mockito" % "mockito-core" % "1.9.0-rc1"
 )
-
-seq(assemblySettings: _*)
 
 javaSource in Test <<= (sourceDirectory in Test)(_ / "emptyAndroidProject" / "src" / "java")
