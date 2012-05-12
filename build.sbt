@@ -6,6 +6,8 @@ version := "0.2"
 
 resolvers += "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
 
+scalaVersion := "2.9.2"
+
 libraryDependencies ++= Seq(
   "com.pivotallabs" % "robolectric" % "1.1",
   "org.specs2" %% "specs2" % "1.9",
