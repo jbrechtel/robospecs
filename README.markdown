@@ -36,6 +36,13 @@ Add a Maven dependency
         <scope>test</scope>
     </dependency>
 
+Note: RoboSpecs is not thread safe
+-------------
+RoboSpecs' intialization of Robolectric (and possibly Robolectric itself) is not thread safe.  By default SBT executes test suites in parallel and Specs2 runs specs within a suite in parallel.  Add the following SBT options to run tests in serial.
+
+    parallelExecution in Test := false,
+    testOptions in Test += Tests.Argument("sequential"),
+
 WARNING: When you use RoboSpecs do not attempt to place Android SDK code within the "should {} codeblock" or outside of it. Robolectric shadows are only attached within the "in {} codeblocks", so Android SDK code only works within them.
 -------
 
