@@ -20,7 +20,7 @@ Get it here [GitHub](https://github.com/jbrechtel/robospecs/archives/master)
 Add an SBT dependency
 -----------
 
-    val robospecs = "com.github.jbrechtel" %% "robospecs" % "0.1-SNAPSHOT" % "test"
+    val robospecs = "com.github.jbrechtel" %% "robospecs" % "0.2" % "test"
     val robospecsSnapshots  = "snapshots" at "http://jbrechtel.github.com/repo/snapshots"
     val snapshots = "snapshots" at "http://scala-tools.org/repo-snapshots"
     val releases  = "releases" at "http://scala-tools.org/repo-releases"
@@ -32,7 +32,7 @@ Add a Maven dependency
     <dependency>
         <groupId>com.github.jbrechtel</groupId>
         <artifactId>robospecs</artifactId>
-        <version>0.1-SNAPSHOT</version>
+        <version>0.2</version>
         <scope>test</scope>
     </dependency>
 
