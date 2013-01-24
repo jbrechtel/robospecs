@@ -3,7 +3,7 @@ package com.github.jbrechtel.robospecs
 import java.io.File
 import com.xtremelabs.robolectric.{RobolectricConfig, Robolectric}
 
-class InternalRoboSpecsSpecs extends RoboSpecs {
+class InternalRoboSpecsSpecs extends RoboSpecs with RoboH2Map {
   override lazy val robolectricConfig = new RobolectricConfig(new File("./src/test/emptyAndroidProject"))
 
   "a running spec" should {
@@ -13,7 +13,7 @@ class InternalRoboSpecsSpecs extends RoboSpecs {
   }
 }
 
-class InternalRoboSpecsAcceptanceSpecs extends RoboAcceptanceSpecs { def is = 
+class InternalRoboSpecsAcceptanceSpecs extends RoboAcceptanceSpecs with RoboH2Map { def is = 
 
   "a running spec should"         ^
     "have an Android application" ! e1
